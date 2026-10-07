@@ -1,0 +1,75 @@
+=== TIER 0 DEMO RUN ===
+
+$ python bcurl.py -v localhost:9000/index.html
+Exit code: 0
+STDOUT:
+<h1>ok</h1>
+
+STDERR:
+Â» HEADERS  sid=1 len=34
+00000000  00 00 22 02 00 00 00 01  81 03 47 45 54 82 0b 2f  |..".......GET../|
+00000010  69 6e 64 65 78 2e 68 74  6d 6c 84 0e 6c 6f 63 61  |index.html..loca|
+00000020  6c 68 6f 73 74 3a 39 30  30 30                    |lhost:9000|
+Â« HEADERS  sid=1 len=16
+00000000  00 00 10 02 00 00 00 01  83 03 32 30 30 87 09 74  |..........200..t|
+00000010  65 78 74 2f 68 74 6d 6c                           |ext/html|
+Â« DATA  sid=1 len=12
+00000000  00 00 0c 01 00 00 00 01  3c 68 31 3e 6f 6b 3c 2f  |........<h1>ok</|
+00000010  68 31 3e 0a                                       |h1>.|
+
+$ python bcurl.py localhost:9000/nope.html
+Exit code: 1
+STDOUT:
+not found
+
+$ python bcurl.py localhost:9000/../etc/passwd
+Exit code: 1
+STDOUT:
+bad request
+
+$ python bcurl.py -v localhost:9000/index.html localhost:9000/empty.txt localhost:9000/index.html
+Exit code: 0
+STDOUT:
+<h1>ok</h1>
+<h1>ok</h1>
+
+STDERR:
+Â» HEADERS  sid=1 len=34
+00000000  00 00 22 02 00 00 00 01  81 03 47 45 54 82 0b 2f  |..".......GET../|
+00000010  69 6e 64 65 78 2e 68 74  6d 6c 84 0e 6c 6f 63 61  |index.html..loca|
+00000020  6c 68 6f 73 74 3a 39 30  30 30                    |lhost:9000|
+Â« HEADERS  sid=1 len=16
+00000000  00 00 10 02 00 00 00 01  83 03 32 30 30 87 09 74  |..........200..t|
+00000010  65 78 74 2f 68 74 6d 6c                           |ext/html|
+Â« DATA  sid=1 len=12
+00000000  00 00 0c 01 00 00 00 01  3c 68 31 3e 6f 6b 3c 2f  |........<h1>ok</|
+00000010  68 31 3e 0a                                       |h1>.|
+Â» HEADERS  sid=2 len=33
+00000000  00 00 21 02 00 00 00 02  81 03 47 45 54 82 0a 2f  |..!.......GET../|
+00000010  65 6d 70 74 79 2e 74 78  74 84 0e 6c 6f 63 61 6c  |empty.txt..local|
+00000020  68 6f 73 74 3a 39 30 30  30                       |host:9000|
+Â« HEADERS  sid=2 len=17
+00000000  00 00 11 02 00 00 00 02  83 03 32 30 30 87 0a 74  |..........200..t|
+00000010  65 78 74 2f 70 6c 61 69  6e                       |ext/plain|
+Â« DATA  sid=2 len=0
+00000000  00 00 00 01 00 00 00 02                           |........|
+Â» HEADERS  sid=3 len=34
+00000000  00 00 22 02 00 00 00 03  81 03 47 45 54 82 0b 2f  |..".......GET../|
+00000010  69 6e 64 65 78 2e 68 74  6d 6c 84 0e 6c 6f 63 61  |index.html..loca|
+00000020  6c 68 6f 73 74 3a 39 30  30 30                    |lhost:9000|
+Â« HEADERS  sid=3 len=16
+00000000  00 00 10 02 00 00 00 03  83 03 32 30 30 87 09 74  |..........200..t|
+00000010  65 78 74 2f 68 74 6d 6c                           |ext/html|
+Â« DATA  sid=3 len=12
+00000000  00 00 0c 01 00 00 00 03  3c 68 31 3e 6f 6b 3c 2f  |........<h1>ok</|
+00000010  68 31 3e 0a                                       |h1>.|
+
+SERVER STDERR (BSERVE_DEBUG=1):
+frame: type=2 sid=1 len=34
+frame: type=2 sid=1 len=33
+frame: type=2 sid=1 len=37
+frame: type=2 sid=1 len=34
+frame: type=2 sid=2 len=33
+frame: type=2 sid=3 len=34
+
+SERVER STDOUT LENGTH: 0 (purity check)

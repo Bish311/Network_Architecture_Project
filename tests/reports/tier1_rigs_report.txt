@@ -1,0 +1,40 @@
+=== TIER 1 CONFORMANCE RIGS ===
+
+$ python t1_rig.py 9000
+PASS ok
+PASS ok_sid7
+PASS root_rewrite
+PASS 404
+PASS dir_404
+PASS traversal
+PASS malformed_idx0
+PASS malformed_rsv
+PASS malformed_ctrl
+PASS missing_path
+PASS method_post
+PASS literal_ok
+PASS unknown_hdr
+PASS skip_unknown
+PASS skip_data
+PASS keepalive3
+PASS empty_file
+PASS big
+PASS err_closes
+
+$ python t2_rig.py 9001
+PASS ok
+PASS notfound
+PASS badreq
+PASS srverr
+PASS skip_before
+PASS skip_mid
+PASS err_frame
+PASS data_first
+PASS dup_headers
+PASS eof_early
+PASS empty_body
+PASS binary_body
+PASS multi3
+PASS conn_refused
+PASS v_flag
+PASS v_skip

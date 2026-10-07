@@ -1,0 +1,22 @@
+[PASS] bserve.py <= 100 LOC (got 95)
+[PASS] bcurl.py <= 100 LOC (got 100)
+[PASS] no banned markers / comments / docstrings in hand-in set
+[PASS] index.html is exactly 12 bytes
+[PASS] empty.txt is 0 bytes
+[PASS] big.bin is exactly 1 MiB
+[PASS] 200: body exact + exit 0
+[PASS] 404: body still printed + exit 1
+[PASS] traversal: 400 + exit 1
+[PASS] 3 URLs one invocation: bodies concatenated + exit 0
+[PASS] -v: stdout stays pure body bytes
+[PASS] -v: hexdump on stderr with type labels
+[PASS] big.bin: byte-exact 1 MiB transfer
+[PASS] skip rule: unknown 0x42 skipped, response clean
+[PASS] keep-alive: second request sid 2 after skip
+[PASS] ERR frame closes connection
+[PASS] annotated hexdump contains the real live bytes (7 hex lines checked)
+[PASS] annotated hexdump has real annotations
+[PASS] connection refused: exit 3, clean
+[PASS] server stdout stayed empty (purity)
+
+20/20 checks passed
