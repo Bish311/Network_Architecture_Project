@@ -1,0 +1,121 @@
+================================================================================
+BCURLP/1 PROTOCOL EXCHANGE — COMPLETE ANNOTATED WIRE TRACE
+Command: bcurl -v localhost:9000/index.html
+================================================================================
+
+--- FRAME 1: CLIENT REQUEST (HEADERS) ---
+
+Direction: » (Client to Server)
+Frame Type: HEADERS (0x02)
+Stream ID: 1 (0x000001)
+Payload Length: 34 bytes (0x000022)
+Total Frame Size: 42 bytes (8 bytes header + 34 bytes payload)
+
+Raw Hexdump with ASCII Gutter:
+00000000  00 00 22 02 00 00 00 01  81 03 47 45 54 82 0b 2f  |..".......GET../|
+00000010  69 6e 64 65 78 2e 68 74  6d 6c 84 0e 6c 6f 63 61  |index.html..loca|
+00000020  6c 68 6f 73 74 3a 39 30  30 30                    |lhost:9000|
+
+Byte-by-Byte Wire Annotation:
+
+[Fixed 8-Byte Frame Header: Offsets 0x0000–0x0007]
+  00 00 22  : LENGTH (24 bits) = 34 bytes payload (0x000022).
+  02        : TYPE (8 bits) = 0x02 (HEADERS frame).
+  00        : FLAGS (8 bits) = 0x00 (Unused in v1; reserved for forward extensions).
+  00 00 01  : STREAM_ID (24 bits) = 1 (First client request stream).
+
+[Header Entry 1: Pseudo-header :method: Offsets 0x0008–0x000C]
+  81        : Control Byte (0x80 | 1) = Indexed name from Static Table Index 1 (":method").
+  03        : String Length = 3 bytes.
+  47 45 54  : String Value = "GET" (ASCII).
+
+[Header Entry 2: Pseudo-header :path: Offsets 0x000D–0x0019]
+  82        : Control Byte (0x80 | 2) = Indexed name from Static Table Index 2 (":path").
+  0B        : String Length = 11 bytes (0x0B).
+  2F 69 6E 64 65 78 2E 68 74 6D 6C : String Value = "/index.html" (ASCII).
+
+[Header Entry 3: Host header: Offsets 0x001A–0x0029]
+  84        : Control Byte (0x80 | 4) = Indexed name from Static Table Index 4 ("host").
+  0E        : String Length = 14 bytes (0x0E).
+  6C 6F 63 61 6C 68 6F 73 74 3A 39 30 30 30 : String Value = "localhost:9000" (ASCII).
+
+Total bytes accounted for in Request: 8 header + 5 (:method) + 13 (:path) + 16 (host) = 42 bytes.
+
+
+--- FRAME 2: SERVER RESPONSE (HEADERS) ---
+
+Direction: « (Server to Client)
+Frame Type: HEADERS (0x02)
+Stream ID: 1 (0x000001, echoed from request)
+Payload Length: 16 bytes (0x000010)
+Total Frame Size: 24 bytes (8 bytes header + 16 bytes payload)
+
+Raw Hexdump with ASCII Gutter:
+00000000  00 00 10 02 00 00 00 01  83 03 32 30 30 87 09 74  |..........200..t|
+00000010  65 78 74 2f 68 74 6d 6c                           |ext/html|
+
+Byte-by-Byte Wire Annotation:
+
+[Fixed 8-Byte Frame Header: Offsets 0x0000–0x0007]
+  00 00 10  : LENGTH (24 bits) = 16 bytes payload (0x000010).
+  02        : TYPE (8 bits) = 0x02 (HEADERS frame).
+  00        : FLAGS (8 bits) = 0x00 (Reserved/none).
+  00 00 01  : STREAM_ID (24 bits) = 1 (Echoed request stream identifier).
+
+[Header Entry 1: Pseudo-header :status: Offsets 0x0008–0x000C]
+  83        : Control Byte (0x80 | 3) = Indexed name from Static Table Index 3 (":status").
+  03        : String Length = 3 bytes.
+  32 30 30  : String Value = "200" (ASCII status code OK).
+
+[Header Entry 2: Header content-type: Offsets 0x000D–0x0017]
+  87        : Control Byte (0x80 | 7) = Indexed name from Static Table Index 7 ("content-type").
+  09        : String Length = 9 bytes.
+  74 65 78 74 2F 68 74 6D 6C : String Value = "text/html" (ASCII MIME type).
+
+Total bytes accounted for in Response HEADERS: 8 header + 5 (:status) + 11 (content-type) = 24 bytes.
+
+
+--- FRAME 3: SERVER RESPONSE (DATA) ---
+
+Direction: « (Server to Client)
+Frame Type: DATA (0x01)
+Stream ID: 1 (0x000001, echoed from request)
+Payload Length: 12 bytes (0x00000C)
+Total Frame Size: 20 bytes (8 bytes header + 12 bytes payload)
+
+Raw Hexdump with ASCII Gutter:
+00000000  00 00 0c 01 00 00 00 01  3c 68 31 3e 6f 6b 3c 2f  |........<h1>ok</|
+00000010  68 31 3e 0a                                       |h1>.|
+
+Byte-by-Byte Wire Annotation:
+
+[Fixed 8-Byte Frame Header: Offsets 0x0000–0x0007]
+  00 00 0C  : LENGTH (24 bits) = 12 bytes payload (0x00000C).
+  01        : TYPE (8 bits) = 0x01 (DATA frame).
+  00        : FLAGS (8 bits) = 0x00 (Reserved/none).
+  00 00 01  : STREAM_ID (24 bits) = 1 (Echoed request stream identifier).
+
+[DATA Payload: Raw Body Bytes: Offsets 0x0008–0x0013]
+  3C 68 31 3E 6F 6B 3C 2F 68 31 3E 0A : Exact UTF-8 contents of index.html ("<h1>ok</h1>\n").
+
+Total bytes accounted for in Response DATA: 8 header + 12 body = 20 bytes.
+
+
+================================================================================
+60-SECOND EXECUTIVE WALKTHROUGH
+================================================================================
+1. The client opens a single TCP socket to localhost:9000.
+2. It constructs a 42-byte HEADERS frame (Stream 1) containing three HPACK-style
+   indexed entries: Static Table Index 1 (:method = "GET"), Index 2 (:path =
+   "/index.html"), and Index 4 (host = "localhost:9000").
+3. The server receives the 8-byte frame header, reads exactly 34 payload bytes,
+   decodes the indexed names, verifies that :path resolves safely within the
+   document root without escaping containment, and confirms the file exists.
+4. The server replies with two frames:
+   a. A 24-byte HEADERS frame (Stream 1) containing :status = "200" (Index 3)
+      and content-type = "text/html" (Index 7).
+   b. A 20-byte DATA frame (Stream 1) carrying the exact 12 file bytes
+      "<h1>ok</h1>\n".
+5. The client parses the HEADERS frame, validates the 200 status code, reads the
+   following DATA frame, and pipes the 12 raw body bytes directly to stdout.
+6. The TCP connection remains open and ready for subsequent request streams.
