@@ -211,3 +211,6 @@ if it were absent.
 **Hand-check requirement:** before coding, confirm you can decode Vector A
 and Vector B on paper. If you cannot annotate these bytes, the spec is not
 finished.
+
+---
+BISHWAYAN CHATTERJEE -- 24BCS10200

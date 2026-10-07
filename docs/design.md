@@ -173,3 +173,6 @@ flowchart TD
 
 ### The Second-Accept Tripwire
 In `t2_rig.py`, Rule R1 (never open a second connection) is mechanically verified: after serving the requests for multi-URL tests, the rig sets a non-blocking timeout on `socket.accept()`. If `bcurl` attempts to open an auxiliary socket, the tripwire triggers and fails the test immediately.
+
+---
+BISHWAYAN CHATTERJEE -- 24BCS10200

@@ -184,3 +184,6 @@ flowchart TD
 2. **Buffer Exhaustion Defense**:
    - Frame `LENGTH` is capped at $16{,}777{,}215$ bytes by the 24-bit wire width.
    - String values within header blocks are capped at 255 bytes by the 1-byte length prefix.
+
+---
+BISHWAYAN CHATTERJEE -- 24BCS10200

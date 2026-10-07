@@ -41,3 +41,6 @@ Concise, one-sentence oral defenses for each of the eight graded design points.
 
 ### 8. Exit-Code Mapping — `:status` String → 0 / 1 / 2 / 3
 > **One-Sentence Defense**: The client parses the 3-character ASCII status string and maps HTTP response status classes directly to UNIX exit codes: `2xx` maps to `0`, `4xx` maps to `1`, `5xx` maps to `2`, and connection failures or wire protocol errors trigger `3`.
+
+---
+BISHWAYAN CHATTERJEE -- 24BCS10200

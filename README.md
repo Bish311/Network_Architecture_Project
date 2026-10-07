@@ -141,3 +141,6 @@ Master the one-sentence defenses for the eight graded architectural decisions:
   - `stdout`: Pure protocol surface. Server writes 0 bytes to `stdout`. Client writes raw body bytes only.
   - `stderr`: Dedicated diagnostic surface (`-v` hexdumps and single-line error notes).
 - **Security & Containment**: Path traversal is immunized via `os.path.commonpath([root, path]) == root` and leading slash stripping.
+
+---
+BISHWAYAN CHATTERJEE -- 24BCS10200
