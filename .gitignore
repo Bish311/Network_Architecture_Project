@@ -1,4 +1,6 @@
 personal/
+verify.py
+server_stdout.tmp
 __pycache__/
 *.py[cod]
 *$py.class
