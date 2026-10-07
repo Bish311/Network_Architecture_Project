@@ -1,6 +1,6 @@
 ================================================================================
 BCURLP/1 PROTOCOL EXCHANGE — COMPLETE ANNOTATED WIRE TRACE
-Command: bcurl -v localhost:9000/index.html
+Command: bcurl -v localhost:9077/index.html
 ================================================================================
 
 --- FRAME 1: CLIENT REQUEST (HEADERS) ---
@@ -14,7 +14,7 @@ Total Frame Size: 42 bytes (8 bytes header + 34 bytes payload)
 Raw Hexdump with ASCII Gutter:
 00000000  00 00 22 02 00 00 00 01  81 03 47 45 54 82 0b 2f  |..".......GET../|
 00000010  69 6e 64 65 78 2e 68 74  6d 6c 84 0e 6c 6f 63 61  |index.html..loca|
-00000020  6c 68 6f 73 74 3a 39 30  30 30                    |lhost:9000|
+00000020  6c 68 6f 73 74 3a 39 30  37 37                    |lhost:9077|
 
 Byte-by-Byte Wire Annotation:
 
@@ -37,7 +37,7 @@ Byte-by-Byte Wire Annotation:
 [Header Entry 3: Host header: Offsets 0x001A–0x0029]
   84        : Control Byte (0x80 | 4) = Indexed name from Static Table Index 4 ("host").
   0E        : String Length = 14 bytes (0x0E).
-  6C 6F 63 61 6C 68 6F 73 74 3A 39 30 30 30 : String Value = "localhost:9000" (ASCII).
+  6C 6F 63 61 6C 68 6F 73 74 3A 39 30 37 37 : String Value = "localhost:9077" (ASCII).
 
 Total bytes accounted for in Request: 8 header + 5 (:method) + 13 (:path) + 16 (host) = 42 bytes.
 
@@ -104,10 +104,10 @@ Total bytes accounted for in Response DATA: 8 header + 12 body = 20 bytes.
 ================================================================================
 60-SECOND EXECUTIVE WALKTHROUGH
 ================================================================================
-1. The client opens a single TCP socket to localhost:9000.
+1. The client opens a single TCP socket to localhost:9077.
 2. It constructs a 42-byte HEADERS frame (Stream 1) containing three HPACK-style
    indexed entries: Static Table Index 1 (:method = "GET"), Index 2 (:path =
-   "/index.html"), and Index 4 (host = "localhost:9000").
+   "/index.html"), and Index 4 (host = "localhost:9077").
 3. The server receives the 8-byte frame header, reads exactly 34 payload bytes,
    decodes the indexed names, verifies that :path resolves safely within the
    document root without escaping containment, and confirms the file exists.
